@@ -3,6 +3,8 @@ import '../../../core/theme/app_theme.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/inner_tab_bar.dart';
 import '../../feed/screens/feed_screen.dart';
+import '../../post/screens/create_post_screen.dart';
+import '../../notifications/screens/notifications_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,7 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.search, size: 20),
             color: AppTheme.textMuted,
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+),
           ),
           IconButton(
             icon: const Icon(Icons.notifications_outlined, size: 20),
@@ -139,10 +144,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // FAB
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: AppTheme.primary,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
+  onPressed: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const CreatePostScreen()),
+  ),
+  backgroundColor: AppTheme.primary,
+  child: const Icon(Icons.add, color: Colors.white),
+),
     );
   }
 }

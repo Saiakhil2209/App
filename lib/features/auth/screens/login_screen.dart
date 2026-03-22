@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,10 +14,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _signInWithGoogle() async {
     setState(() => _isLoading = true);
-    // Temporary — skip auth and go straight to home
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (mounted) {
-      Navigator.pushReplacementNamed(context, '/home');
+    try {
+      await AuthService.signInWithGoogle();
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Sign in failed: ${e.toString()}'),
+            backgroundColor: AppTheme.danger,
+          ),
+        );
+      }
     }
     if (mounted) setState(() => _isLoading = false);
   }
@@ -50,54 +61,40 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
-                      child: Text(
-                        '1',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      child: Text('1',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500)),
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Create your account',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppTheme.textPrimary,
-                    ),
-                  ),
+                  const Text('Create your account',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppTheme.textPrimary)),
                 ],
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Join your college community in seconds.',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: AppTheme.textMuted,
-                ),
-              ),
+              const Text('Join your college community in seconds.',
+                  style: TextStyle(fontSize: 13, color: AppTheme.textMuted)),
               const SizedBox(height: 32),
               _isLoading
                   ? const Center(
                       child: CircularProgressIndicator(
-                        color: AppTheme.primary,
-                      ),
-                    )
+                          color: AppTheme.primary))
                   : InkWell(
                       onTap: _signInWithGoogle,
                       borderRadius: BorderRadius.circular(10),
                       child: Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding:
+                            const EdgeInsets.symmetric(vertical: 14),
                         decoration: BoxDecoration(
                           color: AppTheme.bgPrimary,
                           border: Border.all(
-                            color: AppTheme.border,
-                            width: 0.5,
-                          ),
+                              color: AppTheme.border, width: 0.5),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
@@ -111,25 +108,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 shape: BoxShape.circle,
                               ),
                               child: const Center(
-                                child: Text(
-                                  'G',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
+                                child: Text('G',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500)),
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const Text(
-                              'Continue with Google',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppTheme.textSecondary,
-                              ),
-                            ),
+                            const Text('Continue with Google',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppTheme.textSecondary)),
                           ],
                         ),
                       ),
@@ -159,10 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   'By continuing you agree to Intouch\'s\nTerms of Service and Privacy Policy',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 11,
-                    color: AppTheme.textHint,
-                    height: 1.5,
-                  ),
+                      fontSize: 11,
+                      color: AppTheme.textHint,
+                      height: 1.5),
                 ),
               ),
               const SizedBox(height: 24),

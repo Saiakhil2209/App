@@ -1,8 +1,9 @@
 class SupabaseConstants {
   static const String url = 'https://fzxnmukrweowzodpxtnl.supabase.co';
   static const String anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6eG5tdWtyd2Vvd3pvZHB4dG5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNzA2NTEsImV4cCI6MjA4OTY0NjY1MX0.JkSK2w2rnXBN_Rdyyf-_gFEk5RQ8KDrW6Yg2_8QiRfI';
+  static const String googleWebClientId = 'YOUR_GOOGLE_WEB_CLIENT_ID';
 
-  // Table names
+  // Tables
   static const String usersTable = 'users';
   static const String collegesTable = 'colleges';
   static const String userEducationTable = 'user_education';
